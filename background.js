@@ -1,12 +1,16 @@
+function reloadExtension(id){
+    chrome.management.setEnabled(id, false, function() {
+        chrome.management.setEnabled(id, true);
+        alert('vuedevtools is enabled')
+    });
+}
+//reload automatically
 chrome.management.onDisabled.addListener(function(extension) {
     if(extension.shortName==='Vue.js devtools'){
-        chrome.management.setEnabled(extension.id, false, function() {
-            chrome.management.setEnabled(extension.id, true);
-            alert('vuedevtools is enabled')
-        });
+        reloadExtension(extension.id)
     }
 });
-
+//reload on click
 chrome.browserAction.onClicked.addListener(function(tab) {
     chrome.management.getAll((extensions)=>{
         const vuedevtools=extensions.find(ext=>ext.shortName==='Vue.js devtools')
@@ -14,9 +18,6 @@ chrome.browserAction.onClicked.addListener(function(tab) {
             alert('no vuedevtools extension detected!')
             return;
         }
-        chrome.management.setEnabled(vuedevtools.id, false, function() {
-            chrome.management.setEnabled(vuedevtools.id, true);
-            alert('vuedevtools is enabled')
-        });
+        reloadExtension(vuedevtools.id)
     })
 });
