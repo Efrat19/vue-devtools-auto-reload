@@ -1,7 +1,7 @@
 
 {
     "manifest_version": 2,
-    "name": "Chrome Extension Sample",
+    "name": "vue-devtools-auto-reload",
     "description": "This extension lets you manipulate the DOM",
     "version": "1.0",
     "homepage_url": "https://github.com/dvidsilva/chrome-ext-sample",
@@ -11,6 +11,11 @@
     "background" : {
         "scripts" : ["background.js"]
       },
+      "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "all_frames": true,
+        "js":      ["content.js"]
+    }],
     "permissions": [
         "management"
     ],
